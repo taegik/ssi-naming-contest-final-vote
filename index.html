@@ -87,12 +87,31 @@
     margin: 0 auto;
   }
 
+  .hero-meta-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
   .event-pill {
     display: inline-block;
-    margin-top: 16px;
     background: rgba(205, 182, 137, 0.2);
     border: 1px solid rgba(205, 182, 137, 0.5);
     color: #F5E6C8;
+    font-size: 0.84rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 999px;
+  }
+
+  .deadline-pill {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #E2E8F0;
     font-size: 0.84rem;
     font-weight: 700;
     padding: 6px 16px;
@@ -142,34 +161,63 @@
     margin-bottom: 20px;
   }
 
-  /* DB Status Banner */
-  .db-status-bar {
-    display: flex;
+  /* Mode Switch Tabs (신규 투표 vs 내 투표 확인/수정) */
+  .mode-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    background: #FFFFFF;
+    padding: 6px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 18px;
+    border: 1px solid var(--line);
+  }
+
+  .mode-tab-btn {
+    height: 44px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: 0.15s;
+  }
+
+  .mode-tab-btn.active {
+    background: var(--navy);
+    color: #FFFFFF;
+  }
+
+  /* Closed Alert Banner */
+  .closed-banner {
+    display: none;
+    background: #FEF2F2;
+    border: 1.5px solid #FECACA;
+    color: #991B1B;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* Edit Mode Banner */
+  .edit-mode-banner {
+    display: none;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
-    background: #FFFFFF;
-    border: 1px solid var(--line);
+    gap: 10px;
+    background: var(--mint-soft);
+    border: 1.5px solid var(--mint-border);
+    color: var(--navy);
     border-radius: 14px;
-    padding: 10px 16px;
-    margin-bottom: 16px;
-    font-size: 0.82rem;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .status-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 6px;
-    background: #F59E0B;
-  }
-
-  .status-dot.connected {
-    background: var(--mint);
-    box-shadow: 0 0 0 3px var(--mint-soft);
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
   }
 
   /* Candidate Selection Cards */
@@ -203,16 +251,9 @@
 
   .cand-top {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: 12px;
     margin-bottom: 8px;
-  }
-
-  .cand-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
   }
 
   .radio-circle {
@@ -277,36 +318,6 @@
     padding-left: 36px;
   }
 
-  /* App Icon Mini Preview inside Candidate */
-  .app-badge-preview {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #F8FAFC;
-    border: 1px solid var(--line);
-    padding: 5px 10px;
-    border-radius: 10px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--navy);
-    flex-shrink: 0;
-  }
-
-  .app-mini-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, var(--navy) 0%, var(--mint) 100%);
-    color: #FFFFFF;
-    font-size: 0.62rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    line-height: 1.1;
-  }
-
   /* Form Fields */
   .form-grid {
     display: grid;
@@ -335,9 +346,10 @@
     margin-left: 2px;
   }
 
-  input[type="text"], input[type="tel"], select, textarea {
+  input[type="text"], input[type="tel"], input[type="password"], input[type="datetime-local"], select {
     width: 100%;
-    padding: 10px 14px;
+    height: 46px;
+    padding: 0 14px;
     border: 1.5px solid var(--line);
     border-radius: 12px;
     font-size: 0.94rem;
@@ -348,13 +360,15 @@
     font-family: inherit;
   }
 
-  input[type="text"], input[type="tel"], select {
-    height: 46px;
-  }
-
-  input:focus, select:focus, textarea:focus {
+  input:focus, select:focus {
     border-color: var(--mint);
     box-shadow: 0 0 0 3px var(--mint-soft);
+  }
+
+  input:disabled, select:disabled {
+    background: #F1F5F9;
+    color: var(--text-2);
+    cursor: not-allowed;
   }
 
   .consent-box {
@@ -411,34 +425,13 @@
     box-shadow: none;
   }
 
-  /* Live Result Bar */
-  .result-row {
-    margin-bottom: 14px;
-  }
-
-  .result-head {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-  }
-
-  .bar-bg {
-    height: 12px;
-    background: #ECEEF1;
-    border-radius: 999px;
-    overflow: hidden;
-  }
-
-  .bar-fill {
-    height: 100%;
-    background: var(--navy);
-    border-radius: 999px;
-    transition: width 0.4s ease;
-  }
-
-  .bar-fill.top {
-    background: var(--mint);
+  /* My Vote Lookup Card */
+  .lookup-result-box {
+    margin-top: 20px;
+    background: #F8FAFC;
+    border: 1.5px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
   }
 
   /* Admin / DB Export Bar */
@@ -485,7 +478,7 @@
   .modal-box {
     background: #FFFFFF;
     border-radius: 20px;
-    max-width: 820px;
+    max-width: 840px;
     width: 100%;
     max-height: 88vh;
     overflow-y: auto;
@@ -527,7 +520,6 @@
     .hero h1 { font-size: 1.45rem; }
     .form-grid { grid-template-columns: 1fr; }
     .cand-slogan, .cand-desc { padding-left: 0; }
-    .app-badge-preview { display: none; }
     .card { padding: 20px 18px; }
   }
 </style>
@@ -539,113 +531,173 @@
     <div class="hero-badge">SANGSANGIN GROUP · 전 임직원 결선 투표</div>
     <h1>상상인그룹 통합앱 이름,<br>여러분의 손으로 직접 뽑아주세요!</h1>
     <p>338건의 소중한 응모작 중 임원 심의를 거쳐 선정된 최종 5개 후보입니다.<br>가장 마음에 드는 이름 1개에 투표해 주세요.</p>
-    <div class="event-pill">🎁 투표 참여 임직원 중 추첨을 통해 기프티콘을 보내드립니다!</div>
+    <div class="hero-meta-row">
+      <div class="event-pill">🎁 투표 참여 임직원 중 추첨을 통해 기프티콘을 보내드립니다!</div>
+      <div class="deadline-pill" id="hero-deadline-badge">⏰ 투표 마감: 상시 진행중</div>
+    </div>
   </div>
 </header>
 
 <main class="container">
-  <!-- DB 연결 상태 표시 바 -->
-  <div class="db-status-bar">
-    <div>
-      <span class="status-dot" id="db-status-dot"></span>
-      <span id="db-status-text" style="font-weight:700; color:var(--text-2);">로컬 DB 저장 모드 (중앙 시트 미연결)</span>
-    </div>
-    <button type="button" class="btn-admin" style="margin:0; padding:4px 10px; font-size:0.78rem;" onclick="openConfigModal()">⚙️ 구글 시트 DB 연결하기</button>
+  <!-- 상단 탭: 투표하기 vs 내 투표 확인/수정 -->
+  <div class="mode-tabs">
+    <button type="button" class="mode-tab-btn active" id="tab-vote-btn" onclick="switchTab('vote')">🗳️ 결선 투표 참여하기</button>
+    <button type="button" class="mode-tab-btn" id="tab-lookup-btn" onclick="switchTab('lookup')">🔍 내 투표 내역 확인 · 수정</button>
   </div>
 
-  <!-- STEP 1: 최종 5선 후보 선택 -->
-  <section class="card">
-    <span class="step-label">STEP 01 · 후보 선택</span>
-    <h2 class="card-title">최종 결선 후보 5선 중 1개를 선택해 주세요</h2>
-    <p class="card-sub">후보 카드를 클릭하면 선택됩니다. (1인 1표 참여 가능)</p>
+  <!-- 투표 마감 안내 배너 -->
+  <div class="closed-banner" id="closed-banner">
+    ⛔ 본 결선 투표는 마감되었습니다. 마감 이후에는 신규 투표 및 수정이 불가합니다.
+  </div>
 
-    <div class="cand-list" id="cand-list"></div>
-  </section>
-
-  <!-- STEP 2: 임직원 정보 입력 -->
-  <section class="card">
-    <span class="step-label">STEP 02 · 참여자 정보 입력</span>
-    <h2 class="card-title">기프티콘 발송을 위한 임직원 정보를 입력해 주세요</h2>
-    <p class="card-sub">입력하신 정보는 중복 투표 확인 및 경품 기프티콘 발송 목적으로만 사용됩니다.</p>
-
-    <form id="vote-form" onsubmit="submitVote(event)">
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="voter-company">소속 계열사 <span class="req">*</span></label>
-          <select id="voter-company" required>
-            <option value="">계열사를 선택해 주세요</option>
-            <option value="상상인">상상인 (지주)</option>
-            <option value="상상인저축은행">상상인저축은행</option>
-            <option value="상상인플러스저축은행">상상인플러스저축은행</option>
-            <option value="상상인증권">상상인증권</option>
-            <option value="메디카코리아">메디카코리아</option>
-            <option value="엠아이텍">엠아이텍</option>
-            <option value="바스노바">바스노바</option>
-            <option value="시너지이노베이션">시너지이노베이션</option>
-            <option value="상상인선박기계">상상인선박기계</option>
-            <option value="뉴로바이오젠">뉴로바이오젠</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="voter-name">성함 <span class="req">*</span></label>
-          <input type="text" id="voter-name" placeholder="예: 홍길동" required>
-        </div>
-
-        <div class="form-group full">
-          <label for="voter-phone">휴대폰 번호 (기프티콘 수신용) <span class="req">*</span></label>
-          <input type="tel" id="voter-phone" placeholder="예: 010-1234-5678 (숫자만 입력 가능)" oninput="formatPhone(this)" maxlength="13" required>
-        </div>
-      </div>
-
-      <div class="consent-box">
-        <label>
-          <input type="checkbox" id="voter-consent" required>
-          <span>[필수] 중복 투표 확인 및 추첨 기프티콘 발송을 위한 개인정보(성함, 계열사, 연락처) 수집·이용에 동의합니다.</span>
-        </label>
-      </div>
-
-      <button type="submit" class="submit-btn" id="submit-btn">🗳️ 투표 완료하고 실시간 현황 보기</button>
-    </form>
-  </section>
-
-  <!-- STEP 3: 실시간 누적 득표 현황 -->
-  <section class="card" id="live-result-card">
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:16px;">
+  <!-- =========================================================
+       VIEW 1: 결선 투표 참여 (및 수정 모드)
+  ========================================================== -->
+  <div id="view-vote">
+    <!-- 수정 모드 안내 바 -->
+    <div class="edit-mode-banner" id="edit-mode-banner">
       <div>
-        <span class="step-label">LIVE · 실시간 집계</span>
-        <h2 class="card-title" style="margin-bottom:0;">실시간 누적 투표 현황</h2>
+        <strong style="color:var(--mint-dark);">✏️ 투표 내역 수정 모드</strong> — <span id="edit-user-summary"></span>님의 선택 후보를 변경할 수 있습니다.
       </div>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <button type="button" class="btn-admin" style="margin:0;" onclick="syncFromServer()">🔄 새로고침</button>
-        <div style="font-size:0.9rem; font-weight:800; color:var(--navy); background:var(--mint-soft); padding:6px 14px; border-radius:999px;">
-          총 누적 참여: <span id="total-votes-count" style="color:var(--mint-dark);">0</span>명
-        </div>
-      </div>
+      <button type="button" class="btn-admin" style="margin:0;" onclick="cancelEditMode()">수정 취소</button>
     </div>
-    <div id="result-bars"></div>
-  </section>
 
-  <!-- 담당자용 DB 관리 & 엑셀(CSV) 내보내기 영역 -->
+    <!-- STEP 1: 최종 5선 후보 선택 -->
+    <section class="card">
+      <span class="step-label">STEP 01 · 후보 선택</span>
+      <h2 class="card-title">최종 결선 후보 5선 중 1개를 선택해 주세요</h2>
+      <p class="card-sub">후보 카드를 클릭하면 선택됩니다. (연락처 기준 1인 1표 참여 가능)</p>
+
+      <div class="cand-list" id="cand-list"></div>
+    </section>
+
+    <!-- STEP 2: 임직원 정보 및 비밀번호 4자리 입력 -->
+    <section class="card">
+      <span class="step-label">STEP 02 · 참여자 정보 및 비밀번호 설정</span>
+      <h2 class="card-title">기프티콘 발송 및 내역 조회용 정보를 입력해 주세요</h2>
+      <p class="card-sub">설정한 숫자 4자리 비밀번호로 투표 기간 내 본인의 투표 내역을 조회하고 수정할 수 있습니다.</p>
+
+      <form id="vote-form" onsubmit="submitVote(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="voter-company">소속 계열사 <span class="req">*</span></label>
+            <select id="voter-company" required>
+              <option value="">계열사를 선택해 주세요</option>
+              <option value="상상인">상상인 (지주)</option>
+              <option value="상상인저축은행">상상인저축은행</option>
+              <option value="상상인플러스저축은행">상상인플러스저축은행</option>
+              <option value="상상인증권">상상인증권</option>
+              <option value="메디카코리아">메디카코리아</option>
+              <option value="엠아이텍">엠아이텍</option>
+              <option value="바스노바">바스노바</option>
+              <option value="시너지이노베이션">시너지이노베이션</option>
+              <option value="상상인선박기계">상상인선박기계</option>
+              <option value="뉴로바이오젠">뉴로바이오젠</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="voter-name">성함 <span class="req">*</span></label>
+            <input type="text" id="voter-name" placeholder="예: 홍길동" required>
+          </div>
+
+          <div class="form-group">
+            <label for="voter-phone">휴대폰 번호 (기프티콘 수신용) <span class="req">*</span></label>
+            <input type="tel" id="voter-phone" placeholder="예: 010-1234-5678" oninput="formatPhone(this)" maxlength="13" required>
+          </div>
+
+          <div class="form-group">
+            <label for="voter-pin">본인 확인 비밀번호 (숫자 4자리) <span class="req">*</span></label>
+            <input type="password" id="voter-pin" inputmode="numeric" pattern="\d{4}" maxlength="4" placeholder="숫자 4자리 (예: 1234)" oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" required>
+          </div>
+        </div>
+
+        <div class="consent-box">
+          <label>
+            <input type="checkbox" id="voter-consent" required>
+            <span>[필수] 중복 투표 방지, 투표 내역 조회·수정 및 추첨 기프티콘 발송을 위한 개인정보(계열사, 성함, 연락처) 수집·이용에 동의합니다.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">🗳️ 투표 완료하기</button>
+      </form>
+    </section>
+  </div>
+
+  <!-- =========================================================
+       VIEW 2: 본인 투표 내역 확인 및 수정
+  ========================================================== -->
+  <div id="view-lookup" style="display:none;">
+    <section class="card">
+      <span class="step-label">MY VOTE · 내역 조회 및 수정</span>
+      <h2 class="card-title">본인 투표 내역 확인하기</h2>
+      <p class="card-sub">투표 시 입력한 소속 계열사, 성함, 연락처 및 숫자 4자리 비밀번호를 입력해 주세요.</p>
+
+      <form id="lookup-form" onsubmit="lookupMyVote(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="lookup-company">소속 계열사 <span class="req">*</span></label>
+            <select id="lookup-company" required>
+              <option value="">계열사를 선택해 주세요</option>
+              <option value="상상인">상상인 (지주)</option>
+              <option value="상상인저축은행">상상인저축은행</option>
+              <option value="상상인플러스저축은행">상상인플러스저축은행</option>
+              <option value="상상인증권">상상인증권</option>
+              <option value="메디카코리아">메디카코리아</option>
+              <option value="엠아이텍">엠아이텍</option>
+              <option value="바스노바">바스노바</option>
+              <option value="시너지이노베이션">시너지이노베이션</option>
+              <option value="상상인선박기계">상상인선박기계</option>
+              <option value="뉴로바이오젠">뉴로바이오젠</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="lookup-name">성함 <span class="req">*</span></label>
+            <input type="text" id="lookup-name" placeholder="예: 홍길동" required>
+          </div>
+
+          <div class="form-group">
+            <label for="lookup-phone">휴대폰 번호 <span class="req">*</span></label>
+            <input type="tel" id="lookup-phone" placeholder="예: 010-1234-5678" oninput="formatPhone(this)" maxlength="13" required>
+          </div>
+
+          <div class="form-group">
+            <label for="lookup-pin">본인 비밀번호 (숫자 4자리) <span class="req">*</span></label>
+            <input type="password" id="lookup-pin" inputmode="numeric" pattern="\d{4}" maxlength="4" placeholder="숫자 4자리 입력" oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" required>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" style="background:var(--navy); box-shadow:none;">🔍 내 투표 내역 조회하기</button>
+      </form>
+
+      <div id="lookup-result-area" style="display:none;"></div>
+    </section>
+  </div>
+
+  <!-- 담당자용 관리 영역 (실시간 득표율 공개 화면 제거됨, 관리자 모달에서만 득표 집계 확인) -->
   <footer class="admin-footer">
     <p>상상인그룹 PR팀 · 통합앱 네이밍 공모전 결선 투표 시스템</p>
     <div style="margin-top:8px;">
-      <button type="button" class="btn-admin" onclick="openAdminModal()">🔐 PR팀 담당자 DB 조회 · 엑셀(CSV) 다운로드</button>
-      <button type="button" class="btn-admin" onclick="openConfigModal()">⚙️ 후보 5선 문구 수정 / 구글 시트 DB 연동 설정</button>
+      <button type="button" class="btn-admin" onclick="openAdminModal()">🔐 PR팀 관리자 집계 · DB 다운로드</button>
+      <button type="button" class="btn-admin" onclick="openConfigModal()">⚙️ 후보 5선 · 마감일시 · 구글 시트 DB 설정</button>
     </div>
   </footer>
 </main>
 
-<!-- 담당자 DB 조회 및 CSV 다운로드 모달 -->
+<!-- 담당자 DB 조회 및 득표 집계 모달 -->
 <div class="modal-backdrop" id="admin-modal" onclick="if(event.target===this) closeModal('admin-modal')">
   <div class="modal-box">
     <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:16px; flex-wrap:wrap; gap:10px;">
       <div>
-        <h3 style="font-size:1.2rem; font-weight:800;">📊 누적 투표 DB 내역 및 기프티콘 추첨 관리</h3>
-        <p style="font-size:0.84rem; color:var(--text-2);">누적된 투표 DB를 엑셀(CSV)로 다운로드하거나 경품 당첨자를 즉시 추첨할 수 있습니다.</p>
+        <h3 style="font-size:1.2rem; font-weight:800;">📊 [관리자 전용] 후보별 득표 현황 및 참여자 DB</h3>
+        <p style="font-size:0.84rem; color:var(--text-2);">임직원 화면에는 득표 현황이 노출되지 않으며, 관리자 메뉴에서만 확인 가능합니다.</p>
       </div>
       <button type="button" class="btn-admin" onclick="closeModal('admin-modal')">✕ 닫기</button>
     </div>
+
+    <!-- 관리자 전용 후보별 득표 요약 -->
+    <div id="admin-tally-box" style="background:#F8FAFC; border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:16px;"></div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
       <button type="button" class="btn-admin" style="background:var(--mint); color:#fff; border:none;" onclick="downloadCSV()">📥 전체 투표 DB 엑셀(CSV) 다운로드</button>
@@ -660,7 +712,7 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>참여일시</th>
+            <th>참여/수정일시</th>
             <th>선택 후보</th>
             <th>계열사</th>
             <th>성함</th>
@@ -673,45 +725,60 @@
   </div>
 </div>
 
-<!-- 후보 5선 편집 및 Google Sheets DB 연동 설정 모달 -->
+<!-- 관리자 설정 모달 (마감일시 + 구글 시트 DB + 후보 5선 편집) -->
 <div class="modal-backdrop" id="config-modal" onclick="if(event.target===this) closeModal('config-modal')">
   <div class="modal-box">
     <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:16px;">
-      <h3 style="font-size:1.2rem; font-weight:800;">⚙️ 구글 시트 중앙 DB 연동 & 후보 5선 설정</h3>
+      <h3 style="font-size:1.2rem; font-weight:800;">⚙️ 관리자 설정 (마감 기한 · 구글 시트 DB · 후보 5선)</h3>
       <button type="button" class="btn-admin" onclick="closeModal('config-modal')">✕ 닫기</button>
     </div>
 
-    <div style="background:#F8FAFC; padding:18px; border-radius:14px; border:1px solid var(--line); margin-bottom:20px;">
-      <strong style="display:block; font-size:0.95rem; color:var(--navy); margin-bottom:6px;">1단계. Google Sheets 웹 앱(Apps Script) URL 입력</strong>
+    <!-- 1. 투표 마감 기간 설정 -->
+    <div style="background:#F8FAFC; padding:18px; border-radius:14px; border:1px solid var(--line); margin-bottom:18px;">
+      <strong style="display:block; font-size:0.95rem; color:var(--navy); margin-bottom:6px;">1단계. 투표 마감 일시 설정</strong>
       <p style="font-size:0.83rem; color:var(--text-2); margin-bottom:10px;">
-        전 임직원의 투표 내역이 하나의 구글 시트에 실시간 누적되려면 아래 순서대로 배포한 웹 앱 URL을 붙여넣고 <b>[연결 테스트 및 저장]</b>을 누르세요.<br>
-        ※ 배포 시 반드시 HTML 코드 상단의 <code>DEFAULT_WEBHOOK_URL</code>에도 같은 주소를 넣어두시면 모든 직원 화면에 자동 연결됩니다.
+        설정한 마감 시간이 지나면 자동으로 신규 투표 및 내역 수정이 차단됩니다. (비워두면 상시 진행)
       </p>
-      <div style="display:flex; gap:8px; margin-bottom:12px;">
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <input type="datetime-local" id="deadline-input" style="max-width:260px;">
+        <button type="button" class="btn-admin" style="margin:0; height:46px;" onclick="document.getElementById('deadline-input').value=''">마감 해제(상시)</button>
+      </div>
+    </div>
+
+    <!-- 2. Google Sheets 웹 앱 URL 연동 -->
+    <div style="background:#F8FAFC; padding:18px; border-radius:14px; border:1px solid var(--line); margin-bottom:18px;">
+      <strong style="display:block; font-size:0.95rem; color:var(--navy); margin-bottom:6px;">2단계. Google Sheets 웹 앱(Apps Script) URL 연동</strong>
+      <p style="font-size:0.83rem; color:var(--text-2); margin-bottom:10px;">
+        비밀번호 저장 및 투표 수정을 지원하는 최신 Apps Script 코드를 구글 시트에 배포한 뒤 URL을 입력하세요.
+      </p>
+      <div style="display:flex; gap:8px; margin-bottom:10px;">
         <input type="text" id="webhook-url-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec" style="flex:1;">
         <button type="button" class="btn-admin" style="background:var(--navy); color:#fff; border:none; height:46px; margin:0;" onclick="testWebhookConnection()">🔌 연결 테스트</button>
       </div>
-      <div id="webhook-test-msg" style="font-size:0.82rem; font-weight:700; margin-bottom:10px;"></div>
+      <div id="webhook-test-msg" style="font-size:0.82rem; font-weight:700; margin-bottom:8px;"></div>
 
       <details style="margin-top:8px;">
-        <summary style="cursor:pointer; font-size:0.84rem; font-weight:700; color:var(--mint-dark);">📋 구글 시트 Apps Script 코드 보기 (복사해서 붙여넣기)</summary>
-        <div style="font-size:0.8rem; color:var(--text-2); margin-top:6px;">
-          구글 스프레드시트 생성 → 상단 메뉴 <b>[확장 프로그램] &gt; [Apps Script]</b> → 아래 코드 붙여넣기 → <b>[배포] &gt; [새 배포] &gt; 유형: 웹 앱 (액세스 권한: 모든 사용자)</b> 선택 후 생성된 URL을 위에 입력하세요.
-        </div>
+        <summary style="cursor:pointer; font-size:0.84rem; font-weight:700; color:var(--mint-dark);">📋 구글 시트 Apps Script 코드 보기 (비밀번호·수정 지원 버전)</summary>
         <pre class="code-snippet" id="gas-code-block">function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(["참여일시", "후보ID", "선택후보", "계열사", "성함", "연락처"]);
+    sheet.appendRow(["참여일시", "후보ID", "선택후보", "계열사", "성함", "연락처", "비밀번호"]);
   }
   var data = JSON.parse(e.postData.contents);
-  var phones = sheet.getLastRow() > 1 ? sheet.getRange(2, 6, sheet.getLastRow() - 1, 1).getValues().flat() : [];
+  var rows = sheet.getDataRange().getValues();
   var cleanInput = String(data.phone).replace(/\D/g, "");
-  for (var i = 0; i < phones.length; i++) {
-    if (String(phones[i]).replace(/\D/g, "") === cleanInput) {
+
+  for (var i = 1; i < rows.length; i++) {
+    var rowPhone = String(rows[i][5]).replace(/\D/g, "");
+    if (rowPhone === cleanInput) {
+      if (data.action === "update" && String(rows[i][6]) === String(data.pin)) {
+        sheet.getRange(i + 1, 1, 1, 5).setValues([[data.timestamp, data.candidateId, data.candidateName, data.company, data.name]]);
+        return ContentService.createTextOutput(JSON.stringify({ status: "updated" })).setMimeType(ContentService.MimeType.JSON);
+      }
       return ContentService.createTextOutput(JSON.stringify({ status: "duplicate" })).setMimeType(ContentService.MimeType.JSON);
     }
   }
-  sheet.appendRow([data.timestamp, data.candidateId, data.candidateName, data.company, data.name, data.phone]);
+  sheet.appendRow([data.timestamp, data.candidateId, data.candidateName, data.company, data.name, data.phone, String(data.pin)]);
   return ContentService.createTextOutput(JSON.stringify({ status: "ok" })).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -726,7 +793,8 @@ function doGet(e) {
       candidateName: rows[i][2],
       company: rows[i][3],
       name: rows[i][4],
-      phone: String(rows[i][5])
+      phone: String(rows[i][5]),
+      pin: String(rows[i][6] || "")
     });
   }
   return ContentService.createTextOutput(JSON.stringify({ status: "ok", votes: result })).setMimeType(ContentService.MimeType.JSON);
@@ -735,8 +803,9 @@ function doGet(e) {
       </details>
     </div>
 
+    <!-- 3. 최종 5선 후보 문구 편집 -->
     <div style="margin-bottom:16px;">
-      <strong style="display:block; font-size:0.95rem; color:var(--navy); margin-bottom:10px;">2단계. 최종 5선 후보 문구 편집</strong>
+      <strong style="display:block; font-size:0.95rem; color:var(--navy); margin-bottom:10px;">3단계. 최종 5선 후보 문구 편집</strong>
       <div id="cand-edit-list" style="display:flex; flex-direction:column; gap:10px;"></div>
     </div>
 
@@ -745,63 +814,105 @@ function doGet(e) {
 </div>
 
 <script>
-// ★ 전사 배포 시 아래 DEFAULT_WEBHOOK_URL 따옴표 안에 구글 Apps Script 웹 앱 URL을 넣어두면 모든 접속자에게 자동 연동됩니다.
+// ★ 전사 배포 시 아래 두 설정값을 채워 저장하면 모든 접속자에게 동일하게 적용됩니다.
 const DEFAULT_WEBHOOK_URL = "";
+const DEFAULT_DEADLINE = ""; // 예: "2026-11-25T18:00"
 
 const defaultCandidates = [
   {
     id: 1,
     name: "상상잇 (SangSang IT)",
-    shortName: "상상잇",
     slogan: "사람을 잇고, 생각을 모아, 미래를 열다",
     desc: "상상인그룹의 '상상'과 사람·조직·서비스를 연결하는 '잇다', 스마트 플랫폼 'IT'를 결합한 이름입니다."
   },
   {
     id: 2,
     name: "상상온 (Sangsang ON)",
-    shortName: "상상온",
     slogan: "상상인의 모든 소통과 혜택을 켜다",
     desc: "그룹명 '상상'과 연결·활성화를 뜻하는 'ON', 따뜻한 '온기(溫)'를 담아 일상의 스위치를 켠다는 의미입니다."
   },
   {
     id: 3,
     name: "상상모아 (Sangsang MOA)",
-    shortName: "상상모아",
     slogan: "흩어진 사내 서비스와 마음을 한곳에 모아",
     desc: "먹거리·걷기·칭찬도토리 등 분산된 복지와 소통 채널을 한곳에 모아 시너지를 만든다는 순우리말 결합입니다."
   },
   {
     id: 4,
     name: "상상링크 (Sangsang Link)",
-    shortName: "상상링크",
     slogan: "계열사와 임직원을 하나로 잇다",
     desc: "전 계열사 임직원과 사내 서비스를 하나로 연결(Link)해 우리 팀을 넘어 회사의 답을 찾는 플랫폼입니다."
   },
   {
     id: 5,
     name: "위닝온 (Winning ON)",
-    shortName: "위닝온",
     slogan: "매일의 위닝룰이 켜지는 곳",
     desc: "상상인그룹의 핵심 행동양식 '위닝룰즈'와 'ON'을 결합해 변화와 도전을 일상에서 실천하는 공간입니다."
   }
 ];
 
-let voteCandidates = JSON.parse(localStorage.getItem('ssi_vote_candidates_v2')) || defaultCandidates;
-let voteDB = JSON.parse(localStorage.getItem('ssi_vote_db_v2')) || [];
-let webhookUrl = localStorage.getItem('ssi_vote_webhook_v2') || DEFAULT_WEBHOOK_URL;
-let selectedCandId = null;
+let voteCandidates = JSON.parse(localStorage.getItem('ssi_vote_candidates_v3')) || defaultCandidates;
+let voteDB = JSON.parse(localStorage.getItem('ssi_vote_db_v3')) || [];
+let webhookUrl = localStorage.getItem('ssi_vote_webhook_v3') || DEFAULT_WEBHOOK_URL;
+let voteDeadline = localStorage.getItem('ssi_vote_deadline_v3') || DEFAULT_DEADLINE;
 
-function updateDbStatusUI(isConnected, msg) {
-  const dot = document.getElementById('db-status-dot');
-  const txt = document.getElementById('db-status-text');
-  if (isConnected) {
-    dot.classList.add('connected');
-    txt.style.color = 'var(--mint-dark)';
-    txt.innerText = msg || '구글 시트 중앙 DB 실시간 연동됨';
+let selectedCandId = null;
+let editingPhoneDigits = null; // 수정 중인 사용자의 연락처(숫자만)
+
+function isVotingClosed() {
+  if (!voteDeadline) return false;
+  const end = new Date(voteDeadline);
+  if (isNaN(end.getTime())) return false;
+  return new Date() > end;
+}
+
+function updateDeadlineUI() {
+  const badge = document.getElementById('hero-deadline-badge');
+  const closedBanner = document.getElementById('closed-banner');
+  const submitBtn = document.getElementById('submit-btn');
+
+  if (!voteDeadline) {
+    badge.innerText = '⏰ 투표 기간: 상시 진행중';
+    closedBanner.style.display = 'none';
+    submitBtn.disabled = false;
+    return;
+  }
+
+  const end = new Date(voteDeadline);
+  const formatted = end.toLocaleString('ko-KR', {
+    year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'
+  });
+
+  if (isVotingClosed()) {
+    badge.innerText = `⛔ 투표 마감 (${formatted} 종료)`;
+    closedBanner.style.display = 'block';
+    submitBtn.disabled = true;
+    submitBtn.innerText = '⛔ 투표가 마감되었습니다';
   } else {
-    dot.classList.remove('connected');
-    txt.style.color = 'var(--text-2)';
-    txt.innerText = msg || '로컬 DB 저장 모드 (중앙 시트 미연결)';
+    badge.innerText = `⏰ 투표 마감: ${formatted} 까지`;
+    closedBanner.style.display = 'none';
+    submitBtn.disabled = false;
+    submitBtn.innerText = editingPhoneDigits ? '✏️ 선택한 후보로 수정 완료하기' : '🗳️ 투표 완료하기';
+  }
+}
+
+function switchTab(tab) {
+  const voteView = document.getElementById('view-vote');
+  const lookupView = document.getElementById('view-lookup');
+  const btnVote = document.getElementById('tab-vote-btn');
+  const btnLookup = document.getElementById('tab-lookup-btn');
+
+  if (tab === 'vote') {
+    voteView.style.display = 'block';
+    lookupView.style.display = 'none';
+    btnVote.classList.add('active');
+    btnLookup.classList.remove('active');
+  } else {
+    voteView.style.display = 'none';
+    lookupView.style.display = 'block';
+    btnVote.classList.remove('active');
+    btnLookup.classList.add('active');
+    document.getElementById('lookup-result-area').style.display = 'none';
   }
 }
 
@@ -823,15 +934,9 @@ function renderCandidates() {
     return `
       <div class="cand-option ${isSel ? 'selected' : ''}" onclick="selectCandidate(${c.id})">
         <div class="cand-top">
-          <div class="cand-left">
-            <div class="radio-circle"></div>
-            <span class="cand-num">후보 ${idx + 1}</span>
-            <span class="cand-name">${c.name}</span>
-          </div>
-          <div class="app-badge-preview">
-            <div class="app-mini-icon">${c.shortName}</div>
-            <span>앱 아이콘 예시</span>
-          </div>
+          <div class="radio-circle"></div>
+          <span class="cand-num">후보 ${idx + 1}</span>
+          <span class="cand-name">${c.name}</span>
         </div>
         <div class="cand-slogan">“${c.slogan}”</div>
         <div class="cand-desc">${c.desc}</div>
@@ -841,36 +946,34 @@ function renderCandidates() {
 }
 
 function selectCandidate(id) {
+  if (isVotingClosed()) {
+    alert("투표가 마감되어 후보를 선택할 수 없습니다.");
+    return;
+  }
   selectedCandId = id;
   renderCandidates();
 }
 
-// 서버(Google Sheets)에서 전체 누적 투표 내역 동기화
 async function syncFromServer() {
-  if (!webhookUrl) {
-    updateDbStatusUI(false);
-    renderResults();
-    return;
-  }
+  if (!webhookUrl) return;
   try {
-    updateDbStatusUI(true, '구글 시트 DB 동기화 중...');
     const res = await fetch(webhookUrl);
     const json = await res.json();
     if (json && json.status === 'ok' && Array.isArray(json.votes)) {
       voteDB = json.votes;
-      localStorage.setItem('ssi_vote_db_v2', JSON.stringify(voteDB));
-      updateDbStatusUI(true, `구글 시트 중앙 DB 연동됨 (누적 ${voteDB.length}건)`);
-      renderResults();
+      localStorage.setItem('ssi_vote_db_v3', JSON.stringify(voteDB));
     }
   } catch (err) {
-    console.warn('서버 조회 참고:', err);
-    updateDbStatusUI(true, '구글 시트 웹훅 연결됨 (전송 활성)');
-    renderResults();
+    console.warn('서버 동기화 참고:', err);
   }
 }
 
 async function submitVote(e) {
   e.preventDefault();
+  if (isVotingClosed()) {
+    alert("투표가 마감되었습니다.");
+    return;
+  }
   if (!selectedCandId) {
     alert("투표하실 후보 1개를 먼저 선택해 주세요.");
     document.getElementById('cand-list').scrollIntoView({ behavior: 'smooth' });
@@ -880,6 +983,7 @@ async function submitVote(e) {
   const company = document.getElementById('voter-company').value.trim();
   const name = document.getElementById('voter-name').value.trim();
   const phone = document.getElementById('voter-phone').value.trim();
+  const pin = document.getElementById('voter-pin').value.trim();
   const phoneDigits = phone.replace(/\D/g, '');
 
   if (phoneDigits.length < 10) {
@@ -887,32 +991,85 @@ async function submitVote(e) {
     document.getElementById('voter-phone').focus();
     return;
   }
-
-  if (voteDB.some(v => String(v.phone).replace(/\D/g, '') === phoneDigits)) {
-    alert("이미 투표에 참여하신 연락처입니다. (1인 1표 참여 가능)");
+  if (!/^\d{4}$/.test(pin)) {
+    alert("본인 확인용 비밀번호는 숫자 4자리로 입력해 주세요.");
+    document.getElementById('voter-pin').focus();
     return;
   }
 
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
-  btn.innerText = "투표 저장 중...";
+  btn.innerText = "처리 중...";
+
+  // 최신 서버 DB 동기화 후 중복 여부 재확인
+  await syncFromServer();
 
   const pickedCand = voteCandidates.find(c => c.id === selectedCandId);
+  const nowStr = new Date().toLocaleString('ko-KR');
+
+  // 수정 모드인 경우
+  if (editingPhoneDigits) {
+    const idx = voteDB.findIndex(v => String(v.phone).replace(/\D/g, '') === editingPhoneDigits);
+    if (idx === -1) {
+      alert("기존 투표 내역을 찾을 수 없습니다.");
+      cancelEditMode();
+      btn.disabled = false;
+      return;
+    }
+    voteDB[idx].candidateId = pickedCand.id;
+    voteDB[idx].candidateName = pickedCand.name;
+    voteDB[idx].timestamp = nowStr + " (수정)";
+    localStorage.setItem('ssi_vote_db_v3', JSON.stringify(voteDB));
+
+    if (webhookUrl) {
+      try {
+        await fetch(webhookUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'update',
+            timestamp: voteDB[idx].timestamp,
+            candidateId: pickedCand.id,
+            candidateName: pickedCand.name,
+            company: company,
+            name: name,
+            phone: phone,
+            pin: pin
+          })
+        });
+      } catch (err) { console.warn(err); }
+    }
+
+    alert(`✅ [${pickedCand.name}](으)로 투표 내역이 수정되었습니다.`);
+    cancelEditMode();
+    return;
+  }
+
+  // 신규 투표 시 연락처 기준 중복 체크
+  const existing = voteDB.find(v => String(v.phone).replace(/\D/g, '') === phoneDigits);
+  if (existing) {
+    alert("⚠️ 이미 해당 연락처로 투표에 참여하셨습니다. (1인 1표 제한)\n\n선택 내역 확인이나 후보 변경을 원하시면 상단 [내 투표 내역 확인 · 수정] 탭을 이용해 주세요.");
+    btn.disabled = false;
+    btn.innerText = "🗳️ 투표 완료하기";
+    return;
+  }
+
   const record = {
+    action: 'create',
     id: Date.now(),
-    timestamp: new Date().toLocaleString('ko-KR'),
+    timestamp: nowStr,
     candidateId: pickedCand.id,
     candidateName: pickedCand.name,
     company: company,
     name: name,
-    phone: phone
+    phone: phone,
+    pin: pin
   };
 
-  // 1) 로컬 DB 즉시 누적
   voteDB.push(record);
-  localStorage.setItem('ssi_vote_db_v2', JSON.stringify(voteDB));
+  localStorage.setItem('ssi_vote_db_v3', JSON.stringify(voteDB));
 
-  // 2) 구글 시트 중앙 DB 전송
   if (webhookUrl) {
     try {
       await fetch(webhookUrl, {
@@ -921,27 +1078,145 @@ async function submitVote(e) {
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(record)
       });
-      setTimeout(syncFromServer, 1200);
-    } catch (err) {
-      console.warn("Webhook 전송 오류:", err);
-    }
+    } catch (err) { console.warn(err); }
   }
 
-  renderResults();
-  alert(`🎉 [${pickedCand.name}]에 소중한 한 표가 반영되었습니다!\n기프티콘 추첨 이벤트에 자동 응모되었습니다.`);
+  alert(`🎉 [${pickedCand.name}]에 소중한 한 표가 완료되었습니다!\n\n기프티콘 추첨 이벤트에 자동 응모되었으며, 상단 [내 투표 내역 확인 · 수정] 탭에서 설정하신 비밀번호 4자리로 내역을 확인하실 수 있습니다.`);
 
   document.getElementById('vote-form').reset();
   selectedCandId = null;
   btn.disabled = false;
-  btn.innerText = "🗳️ 투표 완료하고 실시간 현황 보기";
+  btn.innerText = "🗳️ 투표 완료하기";
   renderCandidates();
-  document.getElementById('live-result-card').scrollIntoView({ behavior: 'smooth' });
 }
 
-function renderResults() {
-  const total = voteDB.length;
-  document.getElementById('total-votes-count').innerText = total;
+// 본인 투표 내역 조회
+async function lookupMyVote(e) {
+  e.preventDefault();
+  const company = document.getElementById('lookup-company').value.trim();
+  const name = document.getElementById('lookup-name').value.trim();
+  const phone = document.getElementById('lookup-phone').value.trim();
+  const pin = document.getElementById('lookup-pin').value.trim();
+  const phoneDigits = phone.replace(/\D/g, '');
 
+  await syncFromServer();
+
+  const found = voteDB.find(v =>
+    v.company === company &&
+    v.name === name &&
+    String(v.phone).replace(/\D/g, '') === phoneDigits
+  );
+
+  const area = document.getElementById('lookup-result-area');
+  area.style.display = 'block';
+
+  if (!found) {
+    area.innerHTML = `
+      <div class="lookup-result-box" style="border-color:#FECACA; background:#FEF2F2; color:#991B1B;">
+        <strong>일치하는 투표 내역이 없습니다.</strong>
+        <p style="font-size:0.86rem; margin-top:4px;">입력하신 소속 계열사, 성함, 연락처를 다시 한번 확인해 주세요.</p>
+      </div>
+    `;
+    return;
+  }
+
+  if (found.pin && String(found.pin) !== String(pin)) {
+    area.innerHTML = `
+      <div class="lookup-result-box" style="border-color:#FECACA; background:#FEF2F2; color:#991B1B;">
+        <strong>비밀번호(숫자 4자리)가 일치하지 않습니다.</strong>
+        <p style="font-size:0.86rem; margin-top:4px;">투표 참여 시 설정하신 숫자 4자리 비밀번호를 정확히 입력해 주세요.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const closed = isVotingClosed();
+  area.innerHTML = `
+    <div class="lookup-result-box" style="border-color:var(--mint-border); background:var(--mint-soft);">
+      <div style="font-size:0.82rem; font-weight:800; color:var(--mint-dark); margin-bottom:6px;">✅ 본인 인증 및 투표 내역 확인 완료</div>
+      <div style="font-size:1.05rem; font-weight:800; color:var(--navy); margin-bottom:8px;">
+        선택하신 후보: <span style="color:var(--mint-dark);">${found.candidateName}</span>
+      </div>
+      <div style="font-size:0.86rem; color:var(--text-2); line-height:1.6;">
+        • 참여자: <b>${found.company} / ${found.name}</b> (${found.phone})<br>
+        • 참여(수정) 일시: ${found.timestamp}
+      </div>
+      ${closed
+        ? `<div style="margin-top:12px; font-size:0.84rem; font-weight:700; color:var(--danger);">※ 투표 기간이 마감되어 더 이상 수정할 수 없습니다.</div>`
+        : `<button type="button" class="submit-btn" style="height:44px; margin-top:14px; font-size:0.95rem;" onclick="enterEditMode('${phoneDigits}')">✏️ 선택한 후보 수정하기</button>`
+      }
+    </div>
+  `;
+}
+
+function enterEditMode(phoneDigits) {
+  if (isVotingClosed()) {
+    alert("투표 기간이 마감되어 수정할 수 없습니다.");
+    return;
+  }
+  const found = voteDB.find(v => String(v.phone).replace(/\D/g, '') === phoneDigits);
+  if (!found) return;
+
+  editingPhoneDigits = phoneDigits;
+  selectedCandId = Number(found.candidateId);
+
+  switchTab('vote');
+  renderCandidates();
+
+  document.getElementById('edit-mode-banner').style.display = 'flex';
+  document.getElementById('edit-user-summary').innerText = `${found.company} ${found.name} (${found.phone})`;
+
+  const compEl = document.getElementById('voter-company');
+  const nameEl = document.getElementById('voter-name');
+  const phoneEl = document.getElementById('voter-phone');
+  const pinEl = document.getElementById('voter-pin');
+
+  compEl.value = found.company;
+  nameEl.value = found.name;
+  phoneEl.value = found.phone;
+  pinEl.value = found.pin || '';
+  document.getElementById('voter-consent').checked = true;
+
+  compEl.disabled = true;
+  nameEl.disabled = true;
+  phoneEl.disabled = true;
+  pinEl.disabled = true;
+
+  updateDeadlineUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function cancelEditMode() {
+  editingPhoneDigits = null;
+  selectedCandId = null;
+
+  document.getElementById('edit-mode-banner').style.display = 'none';
+  document.getElementById('vote-form').reset();
+
+  document.getElementById('voter-company').disabled = false;
+  document.getElementById('voter-name').disabled = false;
+  document.getElementById('voter-phone').disabled = false;
+  document.getElementById('voter-pin').disabled = false;
+
+  renderCandidates();
+  updateDeadlineUI();
+}
+
+// 관리자 전용 집계 & DB 조회 모달
+async function openAdminModal() {
+  const pass = prompt("PR팀 관리자 비밀번호를 입력하세요 (기본: ssi2026)");
+  if (pass !== "ssi2026" && pass !== "1234") {
+    if (pass !== null) alert("비밀번호가 일치하지 않습니다.");
+    return;
+  }
+  await syncFromServer();
+  renderAdminTally();
+  renderAdminTable();
+  document.getElementById('admin-modal').classList.add('active');
+}
+
+function renderAdminTally() {
+  const total = voteDB.length;
   const counts = {};
   voteCandidates.forEach(c => counts[c.id] = 0);
   voteDB.forEach(v => {
@@ -949,35 +1224,28 @@ function renderResults() {
     if (counts[cid] !== undefined) counts[cid]++;
   });
 
-  const maxCount = Math.max(...Object.values(counts), 0);
-  const barsEl = document.getElementById('result-bars');
-
-  barsEl.innerHTML = voteCandidates.map((c, idx) => {
-    const cnt = counts[c.id] || 0;
-    const pct = total > 0 ? ((cnt / total) * 100).toFixed(1) : "0.0";
-    const isTop = cnt > 0 && cnt === maxCount;
-    return `
-      <div class="result-row">
-        <div class="result-head">
-          <span><b>${idx + 1}. ${c.name}</b> ${isTop ? '<span style="color:var(--mint-dark); font-size:0.78rem; font-weight:800;">👑 현재 1위</span>' : ''}</span>
-          <span><b>${cnt}표</b> (${pct}%)</span>
+  const box = document.getElementById('admin-tally-box');
+  box.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <strong style="font-size:0.95rem; color:var(--navy);">후보별 실시간 득표 집계 (관리자 전용)</strong>
+      <span style="font-weight:800; color:var(--mint-dark);">총 ${total}명 참여</span>
+    </div>
+    ${voteCandidates.map((c, idx) => {
+      const cnt = counts[c.id] || 0;
+      const pct = total > 0 ? ((cnt / total) * 100).toFixed(1) : "0.0";
+      return `
+        <div style="margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:3px;">
+            <span><b>${idx + 1}. ${c.name}</b></span>
+            <span><b>${cnt}표</b> (${pct}%)</span>
+          </div>
+          <div style="height:8px; background:#E2E8F0; border-radius:999px; overflow:hidden;">
+            <div style="height:100%; width:${pct}%; background:var(--mint);"></div>
+          </div>
         </div>
-        <div class="bar-bg">
-          <div class="bar-fill ${isTop ? 'top' : ''}" style="width: ${pct}%;"></div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function openAdminModal() {
-  const pass = prompt("PR팀 담당자 비밀번호를 입력하세요 (기본: ssi2026)");
-  if (pass !== "ssi2026" && pass !== "1234") {
-    if (pass !== null) alert("비밀번호가 일치하지 않습니다.");
-    return;
-  }
-  renderAdminTable();
-  document.getElementById('admin-modal').classList.add('active');
+      `;
+    }).join('')}
+  `;
 }
 
 function renderAdminTable() {
@@ -1013,7 +1281,8 @@ function downloadCSV() {
     `"${v.phone}"`
   ].join(","));
 
-  const csvContent = "\uFEFF" + [headers.join(","), ...rows].join("\n");
+  const csvContent = "﻿" + [headers.join(","), ...rows].join("
+");
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -1045,29 +1314,28 @@ function drawRandomWinners() {
 function resetDB() {
   if (confirm("누적된 로컬 투표 DB를 모두 삭제하시겠습니까?")) {
     voteDB = [];
-    localStorage.setItem('ssi_vote_db_v2', JSON.stringify(voteDB));
+    localStorage.setItem('ssi_vote_db_v3', JSON.stringify(voteDB));
+    renderAdminTally();
     renderAdminTable();
-    renderResults();
     document.getElementById('winner-banner').style.display = 'none';
   }
 }
 
+// 관리자 설정 모달 (마감일시 + 구글 시트 DB + 후보 5선)
 function openConfigModal() {
-  const pass = prompt("PR팀 담당자 비밀번호를 입력하세요 (기본: ssi2026)");
+  const pass = prompt("PR팀 관리자 비밀번호를 입력하세요 (기본: ssi2026)");
   if (pass !== "ssi2026" && pass !== "1234") {
     if (pass !== null) alert("비밀번호가 일치하지 않습니다.");
     return;
   }
+  document.getElementById('deadline-input').value = voteDeadline;
   document.getElementById('webhook-url-input').value = webhookUrl;
   document.getElementById('webhook-test-msg').innerText = '';
   const listEl = document.getElementById('cand-edit-list');
   listEl.innerHTML = voteCandidates.map((c, i) => `
     <div style="border:1px solid var(--line); border-radius:12px; padding:12px; background:#FFFFFF;">
       <div style="font-size:0.78rem; font-weight:800; color:var(--mint-dark); margin-bottom:6px;">후보 ${i + 1}</div>
-      <div style="display:grid; grid-template-columns:1fr 120px; gap:8px; margin-bottom:6px;">
-        <input type="text" id="edit-name-${i}" value="${c.name}" placeholder="후보 전체 이름">
-        <input type="text" id="edit-short-${i}" value="${c.shortName}" placeholder="아이콘 표기">
-      </div>
+      <input type="text" id="edit-name-${i}" value="${c.name}" placeholder="후보 전체 이름" style="margin-bottom:6px;">
       <input type="text" id="edit-slogan-${i}" value="${c.slogan}" placeholder="한 줄 슬로건" style="margin-bottom:6px;">
       <input type="text" id="edit-desc-${i}" value="${c.desc}" placeholder="이름 의미 설명">
     </div>
@@ -1108,25 +1376,23 @@ function copyGasCode() {
 }
 
 function saveConfig() {
+  voteDeadline = document.getElementById('deadline-input').value.trim();
+  localStorage.setItem('ssi_vote_deadline_v3', voteDeadline);
+
   webhookUrl = document.getElementById('webhook-url-input').value.trim();
-  localStorage.setItem('ssi_vote_webhook_v2', webhookUrl);
+  localStorage.setItem('ssi_vote_webhook_v3', webhookUrl);
 
   voteCandidates = voteCandidates.map((c, i) => ({
     ...c,
     name: document.getElementById(`edit-name-${i}`).value.trim() || c.name,
-    shortName: document.getElementById(`edit-short-${i}`).value.trim() || c.shortName,
     slogan: document.getElementById(`edit-slogan-${i}`).value.trim() || c.slogan,
     desc: document.getElementById(`edit-desc-${i}`).value.trim() || c.desc
   }));
-  localStorage.setItem('ssi_vote_candidates_v2', JSON.stringify(voteCandidates));
+  localStorage.setItem('ssi_vote_candidates_v3', JSON.stringify(voteCandidates));
 
   renderCandidates();
-  if (webhookUrl) {
-    syncFromServer();
-  } else {
-    updateDbStatusUI(false);
-    renderResults();
-  }
+  updateDeadlineUI();
+  if (webhookUrl) syncFromServer();
   closeModal('config-modal');
   alert("설정이 저장되었습니다.");
 }
@@ -1137,12 +1403,8 @@ function closeModal(id) {
 
 // 초기 실행
 renderCandidates();
-if (webhookUrl) {
-  syncFromServer();
-} else {
-  updateDbStatusUI(false);
-  renderResults();
-}
+updateDeadlineUI();
+if (webhookUrl) syncFromServer();
 </script>
 </body>
 </html>

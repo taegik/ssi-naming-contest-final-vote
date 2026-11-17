@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상상인그룹 통합앱 네이밍 결선 투표</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+  :root {
+    --mint: #00BFB6;
+    --mint-dark: #009B93;
+    --mint-soft: #E8FAF8;
+    --mint-border: #B2EDE9;
+    --navy: #273646;
+    --navy-dark: #19222C;
+    --gold: #CDB689;
+    --bg: #F2F4F6;
+    --surface: #FFFFFF;
+    --text-1: #191F28;
+    --text-2: #4E5968;
+    --text-3: #8B95A1;
+    --line: #E5E8EB;
+    --danger: #D13B33;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --shadow-sm: 0 2px 8px rgba(16, 20, 24, 0.04);
+    --shadow-md: 0 10px 28px rgba(16, 20, 24, 0.08);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-1);
+    line-height: 1.6;
+    font-size: 15px;
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Hero Header */
+  .hero {
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 70%, #1F3D47 100%);
+    color: #FFFFFF;
+    padding: 36px 20px 56px;
+    border-bottom: 4px solid var(--mint);
+    text-align: center;
+  }
+
+  .hero-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 191, 182, 0.18);
+    border: 1px solid rgba(0, 191, 182, 0.45);
+    color: #7CECE6;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .hero p {
+    font-size: 0.96rem;
+    color: #CBD5E1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .event-pill {
+    display: inline-block;
+    margin-top: 16px;
+    background: rgba(205, 182, 137, 0.2);
+    border: 1px solid rgba(205, 182, 137, 0.5);
+    color: #F5E6C8;
+    font-size: 0.84rem;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 999px;
+  }
+
+  /* Main Container */
+  .container {
+    max-width: 820px;
+    margin: -30px auto 0;
+    padding: 0 18px 80px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 26px 28px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+    border: 1px solid rgba(229, 232, 235, 0.8);
+  }
+
+  .step-label {
+    display: inline-block;
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--mint-dark);
+    background: var(--mint-soft);
+    padding: 3px 10px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-1);
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .card-sub {
+    font-size: 0.88rem;
+    color: var(--text-2);
+    margin-bottom: 20px;
+  }
+
+  /* Candidate Selection Cards */
+  .cand-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .cand-option {
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 20px 22px;
+    cursor: pointer;
+    transition: all 0.16s ease;
+    background: #FFFFFF;
+    position: relative;
+  }
+
+  .cand-option:hover {
+    border-color: var(--mint);
+    background: #FAFEFE;
+    box-shadow: var(--shadow-md);
+  }
+
+  .cand-option.selected {
+    border-color: var(--mint);
+    background: var(--mint-soft);
+    box-shadow: 0 6px 20px rgba(0, 191, 182, 0.14);
+  }
+
+  .cand-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .cand-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .radio-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #CBD5E1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #FFFFFF;
+    transition: 0.15s;
+  }
+
+  .cand-option.selected .radio-circle {
+    border-color: var(--mint);
+    background: var(--mint);
+  }
+
+  .cand-option.selected .radio-circle::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #FFFFFF;
+  }
+
+  .cand-num {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--navy);
+    background: #F1F5F9;
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+
+  .cand-option.selected .cand-num {
+    background: var(--navy);
+    color: #FFFFFF;
+  }
+
+  .cand-name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-1);
+    letter-spacing: -0.02em;
+  }
+
+  .cand-slogan {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--mint-dark);
+    margin-bottom: 6px;
+    padding-left: 36px;
+  }
+
+  .cand-desc {
+    font-size: 0.88rem;
+    color: var(--text-2);
+    line-height: 1.6;
+    padding-left: 36px;
+  }
+
+  /* App Icon Mini Preview inside Candidate */
+  .app-badge-preview {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #F8FAFC;
+    border: 1px solid var(--line);
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+
+  .app-mini-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--mint) 100%);
+    color: #FFFFFF;
+    font-size: 0.62rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  /* Form Fields */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group.full {
+    grid-column: 1 / -1;
+  }
+
+  .form-group label {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--text-1);
+  }
+
+  .req {
+    color: var(--danger);
+    margin-left: 2px;
+  }
+
+  input[type="text"], input[type="tel"], select {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    font-size: 0.94rem;
+    color: var(--text-1);
+    background: #FFFFFF;
+    outline: none;
+    transition: 0.15s;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--mint);
+    box-shadow: 0 0 0 3px var(--mint-soft);
+  }
+
+  .consent-box {
+    margin-top: 16px;
+    background: #F8FAFC;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 0.84rem;
+    color: var(--text-2);
+  }
+
+  .consent-box label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-1);
+  }
+
+  .consent-box input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--mint);
+    flex-shrink: 0;
+  }
+
+  .submit-btn {
+    width: 100%;
+    height: 54px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 14px;
+    background: var(--mint);
+    color: #FFFFFF;
+    font-size: 1.05rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.16s;
+    box-shadow: 0 6px 18px rgba(0, 191, 182, 0.25);
+  }
+
+  .submit-btn:hover {
+    background: var(--mint-dark);
+    transform: translateY(-1px);
+  }
+
+  /* Live Result Bar */
+  .result-row {
+    margin-bottom: 14px;
+  }
+
+  .result-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+
+  .bar-bg {
+    height: 12px;
+    background: #ECEEF1;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--navy);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+
+  .bar-fill.top {
+    background: var(--mint);
+  }
+
+  /* Admin / DB Export Bar */
+  .admin-footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--text-3);
+  }
+
+  .btn-admin {
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    color: var(--text-2);
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin: 4px;
+  }
+
+  .btn-admin:hover {
+    background: #F8FAFC;
+    color: var(--text-1);
+  }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 20, 24, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 18px;
+  }
+
+  .modal-backdrop.active {
+    display: flex;
+  }
+
+  .modal-box {
+    background: #FFFFFF;
+    border-radius: 20px;
+    max-width: 780px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 28px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.84rem;
+  }
+
+  th, td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  th {
+    background: #F8FAFC;
+    font-weight: 700;
+    color: var(--text-2);
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 1.45rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .cand-slogan, .cand-desc { padding-left: 0; }
+    .app-badge-preview { display: none; }
+    .card { padding: 20px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">SANGSANGIN GROUP · 전 임직원 결선 투표</div>
+    <h1>상상인그룹 통합앱 이름,<br>여러분의 손으로 직접 뽑아주세요!</h1>
+    <p>338건의 소중한 응모작 중 임원 심의를 거쳐 선정된 최종 5개 후보입니다.<br>가장 마음에 드는 이름 1개에 투표해 주세요.</p>
+    <div class="event-pill">🎁 투표 참여 임직원 중 추첨을 통해 기프티콘을 보내드립니다!</div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- STEP 1: 최종 5선 후보 선택 -->
+  <section class="card">
+    <span class="step-label">STEP 01 · 후보 선택</span>
+    <h2 class="card-title">최종 결선 후보 5선 중 1개를 선택해 주세요</h2>
+    <p class="card-sub">후보 카드를 클릭하면 선택됩니다. (1인 1표 참여 가능)</p>
+
+    <div class="cand-list" id="cand-list"></div>
+  </section>
+
+  <!-- STEP 2: 임직원 정보 입력 (기프티콘 추첨 및 중복 투표 방지용) -->
+  <section class="card">
+    <span class="step-label">STEP 02 · 참여자 정보 입력</span>
+    <h2 class="card-title">기프티콘 발송을 위한 임직원 정보를 입력해 주세요</h2>
+    <p class="card-sub">입력하신 정보는 중복 투표 확인 및 경품 기프티콘 발송 목적으로만 사용됩니다.</p>
+
+    <form id="vote-form" onsubmit="submitVote(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="voter-company">소속 계열사 <span class="req">*</span></label>
+          <select id="voter-company" required>
+            <option value="">계열사를 선택해 주세요</option>
+            <option value="상상인">상상인 (지주)</option>
+            <option value="상상인저축은행">상상인저축은행</option>
+            <option value="상상인플러스저축은행">상상인플러스저축은행</option>
+            <option value="상상인증권">상상인증권</option>
+            <option value="메디카코리아">메디카코리아</option>
+            <option value="엠아이텍">엠아이텍</option>
+            <option value="바스노바">바스노바</option>
+            <option value="시너지이노베이션">시너지이노베이션</option>
+            <option value="상상인선박기계">상상인선박기계</option>
+            <option value="뉴로바이오젠">뉴로바이오젠</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="voter-name">성함 <span class="req">*</span></label>
+          <input type="text" id="voter-name" placeholder="예: 홍길동" required>
+        </div>
+
+        <div class="form-group full">
+          <label for="voter-phone">휴대폰 번호 (기프티콘 수신용) <span class="req">*</span></label>
+          <input type="tel" id="voter-phone" placeholder="예: 010-1234-5678 (숫자만 입력 가능)" oninput="formatPhone(this)" maxlength="13" required>
+        </div>
+      </div>
+
+      <div class="consent-box">
+        <label>
+          <input type="checkbox" id="voter-consent" required>
+          <span>[필수] 중복 투표 확인 및 추첨 기프티콘 발송을 위한 개인정보(성함, 계열사, 연락처) 수집·이용에 동의합니다.</span>
+        </label>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">🗳️ 투표 완료하고 실시간 현황 보기</button>
+    </form>
+  </section>
+
+  <!-- STEP 3: 실시간 누적 득표 현황 -->
+  <section class="card" id="live-result-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:16px;">
+      <div>
+        <span class="step-label">LIVE · 실시간 집계</span>
+        <h2 class="card-title" style="margin-bottom:0;">실시간 누적 투표 현황</h2>
+      </div>
+      <div style="font-size:0.9rem; font-weight:800; color:var(--navy); background:var(--mint-soft); padding:6px 14px; border-radius:999px;">
+        총 누적 참여: <span id="total-votes-count" style="color:var(--mint-dark);">0</span>명
+      </div>
+    </div>
+    <div id="result-bars"></div>
+  </section>
+
+  <!-- 담당자용 DB 관리 & 엑셀(CSV) 내보내기 영역 -->
+  <footer class="admin-footer">
+    <p>상상인그룹 PR팀 · 통합앱 네이밍 공모전 결선 투표 시스템</p>
+    <div style="margin-top:8px;">
+      <button type="button" class="btn-admin" onclick="openAdminModal()">🔐 PR팀 담당자 DB 조회 · 엑셀(CSV) 다운로드</button>
+      <button type="button" class="btn-admin" onclick="openConfigModal()">⚙️ 후보 5선 문구 수정 / DB 연동 설정</button>
+    </div>
+  </footer>
+</main>
+
+<!-- 담당자 DB 조회 및 CSV 다운로드 모달 -->
+<div class="modal-backdrop" id="admin-modal" onclick="if(event.target===this) closeModal('admin-modal')">
+  <div class="modal-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+      <div>
+        <h3 style="font-size:1.2rem; font-weight:800;">📊 누적 투표 DB 내역 및 기프티콘 추첨 관리</h3>
+        <p style="font-size:0.84rem; color:var(--text-2);">누적된 투표 DB를 엑셀(CSV)로 다운로드하거나 경품 당첨자를 즉시 추첨할 수 있습니다.</p>
+      </div>
+      <button class="btn-admin" onclick="closeModal('admin-modal')">✕ 닫기</button>
+    </div>
+
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+      <button class="btn-admin" style="background:var(--mint); color:#fff; border:none;" onclick="downloadCSV()">📥 전체 투표 DB 엑셀(CSV) 다운로드</button>
+      <button class="btn-admin" style="background:var(--navy); color:#fff; border:none;" onclick="drawRandomWinners()">🎁 기프티콘 당첨자 랜덤 추첨</button>
+      <button class="btn-admin" style="color:var(--danger);" onclick="resetDB()">🗑️ 로컬 DB 초기화</button>
+    </div>
+
+    <div id="winner-banner" style="display:none; background:var(--mint-soft); border:1px solid var(--mint-border); border-radius:12px; padding:14px 16px; margin-bottom:16px; font-size:0.9rem;"></div>
+
+    <div style="overflow-x:auto; border:1px solid var(--line); border-radius:12px;">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>참여일시</th>
+            <th>선택 후보</th>
+            <th>계열사</th>
+            <th>성함</th>
+            <th>연락처</th>
+          </tr>
+        </thead>
+        <tbody id="admin-db-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 후보 5선 편집 및 외부 DB(Google Sheets / Webhook) 연동 설정 모달 -->
+<div class="modal-backdrop" id="config-modal" onclick="if(event.target===this) closeModal('config-modal')">
+  <div class="modal-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:16px;">
+      <h3 style="font-size:1.2rem; font-weight:800;">⚙️ 후보 5선 수정 및 중앙 DB(구글 시트 등) 연동 설정</h3>
+      <button class="btn-admin" onclick="closeModal('config-modal')">✕ 닫기</button>
+    </div>
+
+    <div style="background:#F8FAFC; padding:16px; border-radius:12px; border:1px solid var(--line); margin-bottom:18px;">
+      <strong style="display:block; font-size:0.92rem; margin-bottom:6px;">🌐 중앙 DB 누적 연동을 위한 웹훅(Google Apps Script / API) URL</strong>
+      <p style="font-size:0.82rem; color:var(--text-2); margin-bottom:10px;">
+        여러 임직원이 각자 PC·모바일에서 투표한 내역을 <b>하나의 구글 시트(DB)</b>로 실시간 누적하려면 Google Apps Script 웹 앱 URL을 입력하세요. (미입력 시 현재 브라우저 로컬 DB에 자동 누적됩니다.)
+      </p>
+      <input type="text" id="webhook-url-input" placeholder="https://script.google.com/macros/s/...../exec">
+    </div>
+
+    <div style="margin-bottom:16px;">
+      <strong style="display:block; font-size:0.92rem; margin-bottom:10px;">📋 최종 5선 후보 문구 편집</strong>
+      <div id="cand-edit-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+    </div>
+
+    <button class="submit-btn" style="height:46px; margin-top:8px;" onclick="saveConfig()">설정 저장하기</button>
+  </div>
+</div>
+
+<script>
+// 1. 최종 5선 후보 기본 데이터 (임원 심의 후 확정된 5개 후보로 수정 가능)
+const defaultCandidates = [
+  {
+    id: 1,
+    name: "상상잇 (SangSang IT)",
+    shortName: "상상잇",
+    slogan: "사람을 잇고, 생각을 모아, 미래를 열다",
+    desc: "상상인그룹의 '상상'과 사람·조직·서비스를 연결하는 '잇다', 스마트 플랫폼 'IT'를 결합한 이름입니다."
+  },
+  {
+    id: 2,
+    name: "상상온 (Sangsang ON)",
+    shortName: "상상온",
+    slogan: "상상인의 모든 소통과 혜택을 켜다",
+    desc: "그룹명 '상상'과 연결·활성화를 뜻하는 'ON', 따뜻한 '온기(溫)'를 담아 일상의 스위치를 켠다는 의미입니다."
+  },
+  {
+    id: 3,
+    name: "상상모아 (Sangsang MOA)",
+    shortName: "상상모아",
+    slogan: "흩어진 사내 서비스와 마음을 한곳에 모아",
+    desc: "먹거리·걷기·칭찬도토리 등 분산된 복지와 소통 채널을 한곳에 모아 시너지를 만든다는 순우리말 결합입니다."
+  },
+  {
+    id: 4,
+    name: "상상링크 (Sangsang Link)",
+    shortName: "상상링크",
+    slogan: "계열사와 임직원을 하나로 잇다",
+    desc: "전 계열사 임직원과 사내 서비스를 하나로 연결(Link)해 우리 팀을 넘어 회사의 답을 찾는 플랫폼입니다."
+  },
+  {
+    id: 5,
+    name: "위닝온 (Winning ON)",
+    shortName: "위닝온",
+    slogan: "매일의 위닝룰이 켜지는 곳",
+    desc: "상상인그룹의 핵심 행동양식 '위닝룰즈'와 'ON'을 결합해 변화와 도전을 일상에서 실천하는 공간입니다."
+  }
+];
+
+let voteCandidates = JSON.parse(localStorage.getItem('ssi_vote_candidates_v1')) || defaultCandidates;
+let voteDB = JSON.parse(localStorage.getItem('ssi_vote_db_v1')) || [];
+let webhookUrl = localStorage.getItem('ssi_vote_webhook_v1') || "";
+let selectedCandId = null;
+
+function formatPhone(el) {
+  let num = el.value.replace(/\D/g, '');
+  if (num.length <= 3) {
+    el.value = num;
+  } else if (num.length <= 7) {
+    el.value = num.slice(0, 3) + '-' + num.slice(3);
+  } else {
+    el.value = num.slice(0, 3) + '-' + num.slice(3, 7) + '-' + num.slice(7, 11);
+  }
+}
+
+function renderCandidates() {
+  const listEl = document.getElementById('cand-list');
+  listEl.innerHTML = voteCandidates.map((c, idx) => {
+    const isSel = selectedCandId === c.id;
+    return `
+      <div class="cand-option ${isSel ? 'selected' : ''}" onclick="selectCandidate(${c.id})">
+        <div class="cand-top">
+          <div class="cand-left">
+            <div class="radio-circle"></div>
+            <span class="cand-num">후보 ${idx + 1}</span>
+            <span class="cand-name">${c.name}</span>
+          </div>
+          <div class="app-badge-preview">
+            <div class="app-mini-icon">${c.shortName}</div>
+            <span>앱 아이콘 예시</span>
+          </div>
+        </div>
+        <div class="cand-slogan">“${c.slogan}”</div>
+        <div class="cand-desc">${c.desc}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function selectCandidate(id) {
+  selectedCandId = id;
+  renderCandidates();
+}
+
+async function submitVote(e) {
+  e.preventDefault();
+  if (!selectedCandId) {
+    alert("투표하실 후보 1개를 먼저 선택해 주세요.");
+    document.getElementById('cand-list').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  const company = document.getElementById('voter-company').value.trim();
+  const name = document.getElementById('voter-name').value.trim();
+  const phone = document.getElementById('voter-phone').value.trim();
+  const phoneDigits = phone.replace(/\D/g, '');
+
+  if (phoneDigits.length < 10) {
+    alert("정확한 휴대폰 번호를 입력해 주세요.");
+    document.getElementById('voter-phone').focus();
+    return;
+  }
+
+  // 중복 참여 체크 (동일 연락처)
+  if (voteDB.some(v => v.phone.replace(/\D/g, '') === phoneDigits)) {
+    alert("이미 투표에 참여하신 연락처입니다. (1인 1표 참여 가능)");
+    return;
+  }
+
+  const pickedCand = voteCandidates.find(c => c.id === selectedCandId);
+  const record = {
+    id: Date.now(),
+    timestamp: new Date().toLocaleString('ko-KR'),
+    candidateId: pickedCand.id,
+    candidateName: pickedCand.name,
+    company: company,
+    name: name,
+    phone: phone
+  };
+
+  // 로컬 DB 저장 및 누적
+  voteDB.push(record);
+  localStorage.setItem('ssi_vote_db_v1', JSON.stringify(voteDB));
+
+  // 중앙 DB(Google Apps Script / Webhook) 설정 시 비동기 전송
+  if (webhookUrl) {
+    try {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(record)
+      });
+    } catch (err) {
+      console.warn("Webhook 전송 참고:", err);
+    }
+  }
+
+  renderResults();
+  alert(`🎉 [${pickedCand.name}]에 소중한 한 표가 반영되었습니다!
+기프티콘 추첨 이벤트에 자동 응모되었습니다.`);
+
+  // 폼 초기화
+  document.getElementById('vote-form').reset();
+  selectedCandId = null;
+  renderCandidates();
+  document.getElementById('live-result-card').scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderResults() {
+  const total = voteDB.length;
+  document.getElementById('total-votes-count').innerText = total;
+
+  const counts = {};
+  voteCandidates.forEach(c => counts[c.id] = 0);
+  voteDB.forEach(v => {
+    if (counts[v.candidateId] !== undefined) counts[v.candidateId]++;
+  });
+
+  const maxCount = Math.max(...Object.values(counts), 0);
+  const barsEl = document.getElementById('result-bars');
+
+  barsEl.innerHTML = voteCandidates.map((c, idx) => {
+    const cnt = counts[c.id] || 0;
+    const pct = total > 0 ? ((cnt / total) * 100).toFixed(1) : "0.0";
+    const isTop = cnt > 0 && cnt === maxCount;
+    return `
+      <div class="result-row">
+        <div class="result-head">
+          <span><b>${idx + 1}. ${c.name}</b> ${isTop ? '<span style="color:var(--mint-dark); font-size:0.78rem; font-weight:800;">👑 현재 1위</span>' : ''}</span>
+          <span><b>${cnt}표</b> (${pct}%)</span>
+        </div>
+        <div class="bar-bg">
+          <div class="bar-fill ${isTop ? 'top' : ''}" style="width: ${pct}%;"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// 담당자 DB 모달 열기
+function openAdminModal() {
+  const pass = prompt("PR팀 담당자 비밀번호를 입력하세요 (기본: ssi2026)");
+  if (pass !== "ssi2026" && pass !== "1234") {
+    if (pass !== null) alert("비밀번호가 일치하지 않습니다.");
+    return;
+  }
+  renderAdminTable();
+  document.getElementById('admin-modal').classList.add('active');
+}
+
+function renderAdminTable() {
+  const tbody = document.getElementById('admin-db-tbody');
+  if (voteDB.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:24px; color:var(--text-3);">아직 누적된 투표 내역이 없습니다.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = [...voteDB].reverse().map((v, idx) => `
+    <tr>
+      <td>${voteDB.length - idx}</td>
+      <td>${v.timestamp}</td>
+      <td><b>${v.candidateName}</b></td>
+      <td>${v.company}</td>
+      <td>${v.name}</td>
+      <td>${v.phone}</td>
+    </tr>
+  `).join('');
+}
+
+function downloadCSV() {
+  if (voteDB.length === 0) {
+    alert("다운로드할 투표 데이터가 없습니다.");
+    return;
+  }
+  const headers = ["번호", "참여일시", "선택후보", "계열사", "성함", "연락처"];
+  const rows = voteDB.map((v, i) => [
+    i + 1,
+    `"${v.timestamp}"`,
+    `"${v.candidateName}"`,
+    `"${v.company}"`,
+    `"${v.name}"`,
+    `"${v.phone}"`
+  ].join(","));
+
+  const csvContent = "﻿" + [headers.join(","), ...rows].join("
+");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `상상인그룹_통합앱_네이밍_결선투표_DB_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function drawRandomWinners() {
+  if (voteDB.length === 0) {
+    alert("추첨할 참여자 데이터가 없습니다.");
+    return;
+  }
+  const countStr = prompt(`현재 총 ${voteDB.length}명이 참여했습니다. 몇 명을 추첨할까요?`, Math.min(5, voteDB.length));
+  const n = parseInt(countStr, 10);
+  if (isNaN(n) || n <= 0) return;
+
+  const shuffled = [...voteDB].sort(() => Math.random() - 0.5);
+  const winners = shuffled.slice(0, Math.min(n, voteDB.length));
+  const banner = document.getElementById('winner-banner');
+  banner.style.display = 'block';
+  banner.innerHTML = `
+    <strong style="color:var(--navy); display:block; margin-bottom:6px;">🎉 기프티콘 당첨자 추첨 결과 (${winners.length}명)</strong>
+    ${winners.map((w, i) => `<div>${i+1}. <b>${w.company} · ${w.name}</b> (${w.phone}) — 투표: ${w.candidateName}</div>`).join('')}
+  `;
+}
+
+function resetDB() {
+  if (confirm("누적된 로컬 투표 DB를 모두 삭제하시겠습니까?")) {
+    voteDB = [];
+    localStorage.setItem('ssi_vote_db_v1', JSON.stringify(voteDB));
+    renderAdminTable();
+    renderResults();
+    document.getElementById('winner-banner').style.display = 'none';
+  }
+}
+
+// 후보 5선 수정 및 웹훅 설정 모달
+function openConfigModal() {
+  const pass = prompt("PR팀 담당자 비밀번호를 입력하세요 (기본: ssi2026)");
+  if (pass !== "ssi2026" && pass !== "1234") {
+    if (pass !== null) alert("비밀번호가 일치하지 않습니다.");
+    return;
+  }
+  document.getElementById('webhook-url-input').value = webhookUrl;
+  const listEl = document.getElementById('cand-edit-list');
+  listEl.innerHTML = voteCandidates.map((c, i) => `
+    <div style="border:1px solid var(--line); border-radius:12px; padding:12px; background:#FFFFFF;">
+      <div style="font-size:0.78rem; font-weight:800; color:var(--mint-dark); margin-bottom:6px;">후보 ${i + 1}</div>
+      <div style="display:grid; grid-template-columns:1fr 120px; gap:8px; margin-bottom:6px;">
+        <input type="text" id="edit-name-${i}" value="${c.name}" placeholder="후보 전체 이름">
+        <input type="text" id="edit-short-${i}" value="${c.shortName}" placeholder="아이콘 표기">
+      </div>
+      <input type="text" id="edit-slogan-${i}" value="${c.slogan}" placeholder="한 줄 슬로건" style="margin-bottom:6px;">
+      <input type="text" id="edit-desc-${i}" value="${c.desc}" placeholder="이름 의미 설명">
+    </div>
+  `).join('');
+  document.getElementById('config-modal').classList.add('active');
+}
+
+function saveConfig() {
+  webhookUrl = document.getElementById('webhook-url-input').value.trim();
+  localStorage.setItem('ssi_vote_webhook_v1', webhookUrl);
+
+  voteCandidates = voteCandidates.map((c, i) => ({
+    ...c,
+    name: document.getElementById(`edit-name-${i}`).value.trim() || c.name,
+    shortName: document.getElementById(`edit-short-${i}`).value.trim() || c.shortName,
+    slogan: document.getElementById(`edit-slogan-${i}`).value.trim() || c.slogan,
+    desc: document.getElementById(`edit-desc-${i}`).value.trim() || c.desc
+  }));
+  localStorage.setItem('ssi_vote_candidates_v1', JSON.stringify(voteCandidates));
+
+  renderCandidates();
+  renderResults();
+  closeModal('config-modal');
+  alert("설정이 저장되었습니다.");
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+// 초기 실행
+renderCandidates();
+renderResults();
+</script>
+</body>
+</html>
